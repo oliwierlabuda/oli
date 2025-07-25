@@ -1,3 +1,7 @@
+-- Variables
+local TOTAL_PERCENT = 100
+local SECONDS_PER_PERCENT = 3
+
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "LoadingScreen"
@@ -5,27 +9,47 @@ screenGui.ResetOnSpawn = false
 screenGui.IgnoreGuiInset = true
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Create background frame
+-- Background
 local background = Instance.new("Frame")
 background.Size = UDim2.new(1, 0, 1, 0)
 background.Position = UDim2.new(0, 0, 0, 0)
-background.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- black background
+background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 background.BorderSizePixel = 0
 background.Parent = screenGui
 
--- Create loading text
+-- Loading text
 local loadingText = Instance.new("TextLabel")
-loadingText.Size = UDim2.new(1, 0, 1, 0)
-loadingText.Position = UDim2.new(0, 0, 0, 0)
-loadingText.Text = "Please wait for load..."
-loadingText.TextColor3 = Color3.fromRGB(255, 255, 255) -- white text
+loadingText.Size = UDim2.new(1, 0, 0.2, 0)
+loadingText.Position = UDim2.new(0, 0, 0.35, 0)
+loadingText.Text = "Loading... 0%"
+loadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
 loadingText.TextScaled = true
-loadingText.BackgroundTransparency = 1
 loadingText.Font = Enum.Font.SourceSansBold
+loadingText.BackgroundTransparency = 1
 loadingText.Parent = screenGui
 
--- Simulate loading delay
-wait(5) -- Change this to how long you want the loading to last
+-- Progress bar background
+local barBackground = Instance.new("Frame")
+barBackground.Size = UDim2.new(0.6, 0, 0.05, 0)
+barBackground.Position = UDim2.new(0.2, 0, 0.5, 0)
+barBackground.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+barBackground.BorderSizePixel = 0
+barBackground.Parent = screenGui
 
--- Remove loading screen
+-- Progress bar fill
+local barFill = Instance.new("Frame")
+barFill.Size = UDim2.new(0, 0, 1, 0)
+barFill.Position = UDim2.new(0, 0, 0, 0)
+barFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+barFill.BorderSizePixel = 0
+barFill.Parent = barBackground
+
+-- Loading animation
+for percent = 1, TOTAL_PERCENT do
+	loadingText.Text = "Loading... " .. percent .. "%"
+	barFill:TweenSize(UDim2.new(percent / 100, 0, 1, 0), "Out", "Linear", 0.5, true)
+	wait(SECONDS_PER_PERCENT)
+end
+
+-- Remove the screen after loading
 screenGui:Destroy()
