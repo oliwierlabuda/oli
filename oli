@@ -1,1 +1,31 @@
-loadstring(game:HttpGet("https://pastefy.app/mmsUyoIc/raw"))()
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "LoadingScreen"
+screenGui.ResetOnSpawn = false
+screenGui.IgnoreGuiInset = true
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create background frame
+local background = Instance.new("Frame")
+background.Size = UDim2.new(1, 0, 1, 0)
+background.Position = UDim2.new(0, 0, 0, 0)
+background.BackgroundColor3 = Color3.fromRGB(0, 0, 0) -- black background
+background.BorderSizePixel = 0
+background.Parent = screenGui
+
+-- Create loading text
+local loadingText = Instance.new("TextLabel")
+loadingText.Size = UDim2.new(1, 0, 1, 0)
+loadingText.Position = UDim2.new(0, 0, 0, 0)
+loadingText.Text = "Please wait for load..."
+loadingText.TextColor3 = Color3.fromRGB(255, 255, 255) -- white text
+loadingText.TextScaled = true
+loadingText.BackgroundTransparency = 1
+loadingText.Font = Enum.Font.SourceSansBold
+loadingText.Parent = screenGui
+
+-- Simulate loading delay
+wait(5) -- Change this to how long you want the loading to last
+
+-- Remove loading screen
+screenGui:Destroy()
